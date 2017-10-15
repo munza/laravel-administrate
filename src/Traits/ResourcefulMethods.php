@@ -78,7 +78,15 @@ trait ResourcefulMethods
      */
     public function update(Request $request, $id)
     {
-        //
+        $resource = $this->findResource($id);
+
+        $resource->fill($request->all());
+
+        if (! $resource->save()) {
+
+        }
+
+        return redirect($this->getDashboard()->route('show', $resource));
     }
 
     /**

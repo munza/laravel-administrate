@@ -7,6 +7,7 @@
 
 <form action="{{ $dashboard->route('update', $resource) }}" method="post">
     {{ csrf_field() }}
+    {{ method_field('PUT') }}
     @foreach ($dashboard->formAttributes() as $attribute)
         {!! $dashboard->field($attribute)->render($resource) !!}
     @endforeach
