@@ -81,14 +81,23 @@ abstract class BaseField
     }
 
     /**
-     * Get the field value.
+     * Get the field value from a given resource object/array.
      *
      * @param  array|object $resource
      * @return mixed
      */
     public function getValue($resource)
     {
-        return $this->makeValue($resource);
+        switch (true) {
+            case is_object($resource):
+                return $resource->{$this->getAttribute()};
+
+            case is_array($resource):
+                return $resource[$this->getAttribute()];
+
+            default:
+                return null;
+        }
     }
 
     /**
@@ -120,23 +129,17 @@ abstract class BaseField
     }
 
     /**
-     * Make value from a given resource array/object.
+     * Get the field name from either options of attribute.
      *
-     * @param  array|object $resource
-     * @return mixed
+     * @return string
      */
-    private function makeValue($resource)
+    private function getAttribute()
     {
-        switch (true) {
-            case is_object($resource):
-                return $resource->{$this->attribute};
-
-            case is_array($resource):
-                return $resource[$this->attribute];
-
-            default:
-                return null;
+        if (isset($this->options['field'])) {
+            return $this->options['field'];
         }
+
+        return $this->attribute;
     }
 
     /**
