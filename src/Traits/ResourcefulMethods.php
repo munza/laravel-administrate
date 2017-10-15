@@ -97,7 +97,13 @@ trait ResourcefulMethods
      */
     public function destroy($id)
     {
-        //
+        $resource = $this->findResource($id);
+
+        if (! $resource->delete()) {
+
+        }
+
+        return redirect($this->getDashboard()->route('index'));
     }
 
     /**
