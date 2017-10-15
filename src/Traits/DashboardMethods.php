@@ -21,6 +21,6 @@ trait DashboardMethods
      */
     public function shareDashboardWithView()
     {
-        app('view')->share('dashboard', $this->dashboard);
+        app('view')->share('dashboard', $this->getDashboard());
     }
 }

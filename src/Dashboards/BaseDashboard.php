@@ -2,6 +2,8 @@
 
 namespace Munza\Administrate\Dashboards;
 
+use Munza\Administrate\Exceptions\AttributeTypeNotDefined;
+
 abstract class BaseDashboard
 {
     /**
@@ -40,6 +42,10 @@ abstract class BaseDashboard
      */
     public function field(string $attribute)
     {
+        if (! isset($this->attributeTypes()[$attribute])) {
+            throw new AttributeTypeNotDefined($attribute, $this);
+        }
+
         $attributeClass = $this->attributeTypes()[$attribute];
 
         if (is_array($attributeClass)) {
