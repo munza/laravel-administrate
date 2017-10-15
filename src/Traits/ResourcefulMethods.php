@@ -40,7 +40,7 @@ trait ResourcefulMethods
 
         }
 
-        return redirect()->route($this->dashboard->route('index'));
+        return redirect($this->getDashboard()->route('index'));
     }
 
     /**

@@ -170,7 +170,13 @@ abstract class BaseField
             return $customViewPath;
         }
 
-        return "administrate::fields.{$this->getFieldName()}.{$this->getTemplateName()}";
+        $adminViewPath = "administrate::fields.{$this->getFieldName()}.{$this->getTemplateName()}";
+
+        if (app('view')->exists($adminViewPath)) {
+            return $adminViewPath;
+        }
+
+        return "administrate::fields.default_field.{$this->getTemplateName()}";
     }
 
     /**
