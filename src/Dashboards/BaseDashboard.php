@@ -14,6 +14,13 @@ abstract class BaseDashboard
     public $label;
 
     /**
+     * Resource model.
+     *
+     * @var string
+     */
+    public $model;
+
+    /**
      * Dashboard route prefix.
      *
      * @var string
@@ -56,5 +63,15 @@ abstract class BaseDashboard
         }
 
         return new $attributeClass($attribute);
+    }
+
+    /**
+     * Get the model instance of the related resource.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getModel()
+    {
+        return new $this->model;
     }
 }

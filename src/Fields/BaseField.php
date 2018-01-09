@@ -90,14 +90,41 @@ abstract class BaseField
     {
         switch (true) {
             case is_object($resource):
-                return $resource->{$this->getAttribute()};
+                return $resource->{$this->getFieldKey()};
 
             case is_array($resource):
-                return $resource[$this->getAttribute()];
+                return $resource[$this->getFieldKey()];
 
             default:
                 return null;
         }
+    }
+
+    /**
+     * Get attribute field from options and given attribute.
+     *
+     * @return string
+     */
+    public function getFieldKey()
+    {
+        if (isset($this->options['field'])) {
+            return $this->options['field'];
+        }
+
+        return $this->attribute;
+    }
+
+    /**
+     * Make label from given value or attribute.
+     *
+     * @return string
+     */
+    public function makeLabel()
+    {
+        return $this->getOption(
+            'label',
+            ucwords(preg_replace('/_/', ' ', $this->attribute))
+        );
     }
 
     /**
@@ -116,45 +143,18 @@ abstract class BaseField
     }
 
     /**
-     * Make label from given value or attribute.
-     *
-     * @return string
-     */
-    private function makeLabel()
-    {
-        return $this->getOption(
-            'label',
-            ucwords(preg_replace('/_/', ' ', $this->attribute))
-        );
-    }
-
-    /**
-     * Get the field name from either options of attribute.
-     *
-     * @return string
-     */
-    private function getAttribute()
-    {
-        if (isset($this->options['field'])) {
-            return $this->options['field'];
-        }
-
-        return $this->attribute;
-    }
-
-    /**
      * Check if the field is renderable.
      *
      * @return boolean
      */
-    private function isRenderable()
+    protected function isRenderable()
     {
         if (isset($this->options['only'])) {
             return in_array($this->getRequestMethod(), $this->options['only']);
         }
 
         if (isset($this->options['except'])) {
-            return ! in_array($this->getRequestMethod(), $this->options['except']);
+            return !in_array($this->getRequestMethod(), $this->options['except']);
         }
 
         return true;
@@ -165,7 +165,7 @@ abstract class BaseField
      *
      * @return string
      */
-    private function getTemplatePath()
+    protected function getTemplatePath()
     {
         $customViewPath = "admin.fields.{$this->getFieldName()}.{$this->getTemplateName()}";
 
