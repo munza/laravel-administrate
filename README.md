@@ -12,6 +12,25 @@
 Basic administration package to create generalized CRUD functionality for Laravel and Lumen.
 
 
+## To-do(s)
+
+- [ ] Add more fields
+    - [x] belongs to
+    - [x] boolean
+    - [ ] date time
+    - [ ] email
+    - [ ] has many
+    - [ ] has one
+    - [ ] number
+    - [ ] polymorphic
+    - [ ] through
+    - [ ] select
+    - [x] string
+    - [ ] text
+    - [x] password
+- [ ] Add exceptions in trait
+
+
 ## Install
 
 Via Composer
