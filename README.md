@@ -11,6 +11,7 @@
 
 Basic administration package to create generalized CRUD functionality for Laravel and Lumen.
 
+
 ## Install
 
 Via Composer
@@ -19,26 +20,130 @@ Via Composer
 $ composer require munza/laravel-administrate
 ```
 
+
 ## Usage
 
-...
 
-## Change log
+### Setup
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+- Run the following command to create the `app\Http\Controllers\AdminController.php`.
 
-## Contributing
+```bash
+$ php artisan administrate:install
+```
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
-## Security
+### Creating an admin resource
 
-If you discover any security related issues, please open an issue.
+- Create you model and migration with Laravel's default commands.
+
+- Run the following command to create a new admin controller under `app\Http\Controllers` folder.
+
+```bash
+$ php artisan administrate:controller <name>
+```
+
+- Run the following command to create a new admin dashboard under `app\Dashboards` folder.
+
+```bash
+$ php artisan administrate:dashboard <name>
+```
+
+- Add the dashboard and model name in the controller file.
+
+```php
+// ...
+    public function dashboard()
+    {
+        return <dashboard>::class;
+    }
+
+    public function model()
+    {
+        return <model>::class;
+    }
+// ...
+```
+
+- Edit the dashboard to add fields and attributes.
+
+```php
+// ...
+    public $label = <resource title>;
+
+    public $routePrefix = <resource route>;
+
+    public $model = <model>::class;
+
+    public function attributeTypes()
+    {
+        return [
+            // list of attribute types of fields. eg.
+            // 'name' => StringField::class,
+        ];
+    }
+
+    public function listAttributes()
+    {
+        return [
+            // list of fields to show at index view. eg.
+            // 'name',
+        ];
+    }
+
+    public function showAttributes()
+    {
+        return [
+            // list of fields to show at single view. eg.
+            // 'name',
+        ];
+    }
+
+    public function formAttributes()
+    {
+        return [
+            // list of fields for form view. eg.
+            // 'name',
+        ];
+    }
+// ...
+```
+
+## Customizing
+
+- To use a custom view for admin page.
+
+```bash
+$ php artisan administrate:views:index <resource>
+$ php artisan administrate:views:create <resource>
+$ php artisan administrate:views:edit <resource>
+$ php artisan administrate:views:show <resource>
+```
+
+`<resource>` is optional. This command will generate view files in the application's `resource\views` folder and these files will be used instead of package's default view.
+
+- To edit the default layout views.
+
+```bash
+$ php artisan adminisrate:views:layout
+```
+
+- To create a new field type.
+
+```bash
+$ php artisan administrate:views:field <name>
+```
+
+## Bugs & Issues
+
+If you discover any bugs or issues, please open an issue.
+
 
 ## Credits
 
 - [Tawsif Aqib][link-author]
 - [All Contributors][link-contributors]
+
 
 ## License
 
