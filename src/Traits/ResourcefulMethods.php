@@ -151,8 +151,12 @@ trait ResourcefulMethods
             ? $this->template
             : $this->getResourceName();
 
-        if ($view = app('view')->exists("admin.{$resource}.{$method}")) {
-            return $view;
+        if (app('view')->exists("admin.{$resource}.{$method}")) {
+            return "admin.{$resource}.{$method}";
+        }
+
+        if (app('view')->exists("admin.layout.{$method}")) {
+            return "admin.layout.{$method}";
         }
 
         return "administrate::dashboard.{$method}";
@@ -165,6 +169,8 @@ trait ResourcefulMethods
      */
     private function getResourceName()
     {
-        return snake_case(preg_replace('/Controller$/', '', class_basename($this)));
+        return str_plural(
+            snake_case(preg_replace('/Controller$/', '', class_basename($this)))
+        );
     }
 }
