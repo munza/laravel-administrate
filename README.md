@@ -21,12 +21,12 @@ Basic administration package to create generalized CRUD functionality for Larave
     - [ ] email
     - [ ] has many
     - [ ] has one
-    - [ ] number
+    - [x] number
     - [ ] polymorphic
     - [ ] through
     - [ ] select
     - [x] string
-    - [ ] text
+    - [x] text
     - [x] password
 - [ ] Add exceptions in trait
 
