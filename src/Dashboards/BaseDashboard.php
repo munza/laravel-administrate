@@ -2,7 +2,9 @@
 
 namespace Munza\Administrate\Dashboards;
 
+use Munza\Administrate\Exceptions\DashboardModelNotFound;
 use Munza\Administrate\Exceptions\AttributeTypeNotDefined;
+use Munza\Administrate\Exceptions\DashboardModelNotDefined;
 
 abstract class BaseDashboard
 {
@@ -26,6 +28,28 @@ abstract class BaseDashboard
      * @var string
      */
     public $routePrefix;
+
+    /**
+     * BaseDashboard constructor.
+     */
+    public function __construct()
+    {
+        if(!isset($this->model)) {
+            throw new DashboardModelNotDefined($this);
+        }
+
+        if (!class_exists($this->model)) {
+            throw new DashboardModelNotFound($this->model, $this);
+        }
+
+        if (!isset($this->routePrefix)) {
+            $this->routePrefix = str_plural($this->getModelName());
+        }
+
+        if (!isset($this->label)) {
+            $this->label = ucwords(str_replace('_', ' ', $this->getModelName()));
+        }
+    }
 
     /**
      * Get a dashboard named route.
@@ -73,5 +97,10 @@ abstract class BaseDashboard
     public function getModel()
     {
         return new $this->model;
+    }
+
+    private function getModelName()
+    {
+        return snake_case(strtolower(array_first(explode("::", array_last(explode("\\", $this->model))))));
     }
 }

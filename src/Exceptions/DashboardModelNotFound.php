@@ -5,19 +5,19 @@ namespace Munza\Administrate\Exceptions;
 use Exception;
 use Munza\Administrate\Dashboards\BaseDashboard;
 
-class AttributeTypeNotDefined extends Exception
+class DashboardModelNotFound extends Exception
 {
     /**
-     * AttributeTypeNotDefined constructor.
+     * DashboardModelNotDefined constructor.
      *
      * @param string        $attribute
      * @param BaseDashboard $dashboard
      * @return \Exception
      */
-    public function __construct(string $attribute, BaseDashboard $dashboard)
+    public function __construct(string $model, BaseDashboard $dashboard)
     {
         $dashboardName = class_basename($dashboard);
-        $message = "{$attribute} attribute not defined for {$dashboardName}";
+        $message = "{$model} model not found for {$dashboardName}";
 
         return parent::__construct($message, 500);
     }
