@@ -57,12 +57,17 @@ class BelongsToField extends BaseField
      * from the resource object/array.
      *
      * @param  array|object $resource
+     * @param  bool|null.   $raw
      * @return mixed
      */
-    public function getValue($resource)
+    public function getValue($resource, bool $raw = null)
     {
         if (! $this->options['key']) {
             return null;
+        }
+
+        if ($raw) {
+            return parent::getValue($resource, true);
         }
 
         if ($key = $this->getAttributeFromRelationship($resource, $this->options['show'])) {

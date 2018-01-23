@@ -33,6 +33,13 @@ abstract class BaseField
     public $value;
 
     /**
+     * Field raw value.
+     *
+     * @var mixed
+     */
+    public $rawValue;
+
+    /**
      * Field constructor.
      *
      * @param string     $attribute
@@ -58,6 +65,7 @@ abstract class BaseField
         }
 
         $this->value = $this->getValue($resource);
+        $this->rawValue = $this->getValue($resource, true);
 
         return app('view')->make($this->getTemplatePath())
                           ->with('field', $this)
@@ -84,9 +92,10 @@ abstract class BaseField
      * Get the field value from a given resource object/array.
      *
      * @param  array|object $resource
+     * @param  bool|null.   $raw
      * @return mixed
      */
-    public function getValue($resource)
+    public function getValue($resource, bool $raw = null)
     {
         switch (true) {
             case is_object($resource):
