@@ -18,7 +18,7 @@ Basic administration package to create generalized CRUD functionality for Larave
     - [x] belongs to
     - [x] boolean
     - [ ] date time
-    - [ ] email
+    - [x] email
     - [ ] has many
     - [ ] has one
     - [x] number
